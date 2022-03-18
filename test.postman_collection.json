@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "2d0da3a6-f371-4e88-bafd-1f405f3861cf",
+		"name": "test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "登录接口",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsondata = pm.response.json();",
+							"pm.globals.set(\"token\", jsondata.token);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sign\": \"4AB09FBDD1116B4F9889963F88E189CE\",\n\t\"time\": \"1642406108445\",\n\t\"phone\": \"e1flJ2VBi4XFeUXDy2d8fjAUVgKr7Jsq\\/XcDLf62\\/TEVDIW8zssDAP0gD3ZQQWWJViUaTK8ytshXiXyLMCGMce+3z50GlYibtRX9WTkiNNx69snaAdJBjuGf3NPVdFkOYY8SFWp5yOZMasJFftLPWmLKm4j44RblbpNiiJ2Nu3o=\",\n\t\"nationCode\": \"86\",\n\t\"password\": \"GjLW5l16Aw9SjzVv8tnNOZ7QnTq9qlHprLHYK1+g0LHSfsMGn5yShUQiur7D2yXyqdQaUneNDJiNrX1ZbKvuosEQnRmKzxa53LnMz5PFtoA1VFdBDpuxBBQvOsM23SkNGvIDA0BYf\\/GvJAi3Q6hyb4LsWje62OiR2i2uF8eaEFY=\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{testapi}}/sd-passport/login/login_by_phone_password_v3",
+					"host": [
+						"{{testapi}}"
+					],
+					"path": [
+						"sd-passport",
+						"login",
+						"login_by_phone_password_v3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取历史记录接口",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"课程\");",
+							"});",
+							"",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.information.histories[1].subType).to.eql(1)",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202]);",
+							"});",
+							"",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"var schema = {",
+							"    \"items\": {",
+							"        \"type\": \"boolean\"",
+							"    }",
+							"};",
+							"",
+							"var data1 = [true, false];",
+							"var data2 = [true, 123];",
+							"",
+							"pm.test('Schema is valid', function () {",
+							"    pm.expect(tv4.validate(data1, schema)).to.be.true;",
+							"    pm.expect(tv4.validate(data2, schema)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "t",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "x-api-key",
+						"value": "PMAK-62144fd4ef37520ad8141f19-881a4ab8341311420fe07f5c8867b99936",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"time\": \"1642405455659\",\n\t\"pageNum\": \"1\",\n\t\"pageCount\": \"20\",\n\t\"sign\": \"E57785D7857127A944A46847B662ADFA\",\n\t\"subTypes\": \"0\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{testapi}}/kt_server/history/list",
+					"host": [
+						"{{testapi}}"
+					],
+					"path": [
+						"kt_server",
+						"history",
+						"list"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "variable_key",
+			"value": ""
+		}
+	]
+}
